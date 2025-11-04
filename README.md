@@ -28,30 +28,3 @@ Java + SpringBoot + Vue + Mysql
 > + 个人中心：个人中心、收获地址、商品收藏、商品订单
 
 
-### 部分功能演示
-![输入图片说明](photo/1-1.png)
-![输入图片说明](photo/1-2.png)
-![输入图片说明](photo/1-3.png)
-![输入图片说明](photo/1-4.png)
-![输入图片说明](photo/1-5.png)
-![输入图片说明](photo/1-6.png)
-![输入图片说明](photo/1-7.png)
-![输入图片说明](photo/1-8.png)
-![输入图片说明](photo/1-9.png)
-![输入图片说明](photo/1-10.png)
-![输入图片说明](photo/1-11.png)
-![输入图片说明](photo/1-12.png)
-![输入图片说明](photo/1-13.png)
-![输入图片说明](photo/1-14.png)
-![输入图片说明](photo/1-15.png)
-![输入图片说明](photo/2-1.png)
-![输入图片说明](photo/2-2.png)
-![输入图片说明](photo/2-3.png)
-![输入图片说明](photo/2-4.png)
-![输入图片说明](photo/2-5.png)
-![输入图片说明](photo/2-6.png)
-![输入图片说明](photo/2-7.png)
-![输入图片说明](photo/2-8.png)
-![输入图片说明](photo/2-9.png)
-
-
