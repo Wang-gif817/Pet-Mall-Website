@@ -1,8 +1,7 @@
 # 宠物商城系统
-> 
+>
 #### 介绍
-宠物商城系统(Java_SpringBoot_Vue)
-有BUG可留言加微
+宠物商城系统(Java_SpringBoot_Vue) - 毕业设计项目
 
 #### 软件架构
 Java + SpringBoot + Vue + Mysql

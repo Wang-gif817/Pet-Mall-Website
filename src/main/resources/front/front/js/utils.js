@@ -3,12 +3,36 @@
  * @param {Object} url
  */
 function jump(url) {
+	console.log('jump函数被调用, URL:', url);
+
 	if (!url || url == 'null' || url == null) {
 		window.location.href = './index.html';
+		return;
 	}
-	// 路径访问设置
-	localStorage.setItem('iframeUrl', url.replace('../', './pages/'));
-	window.location.href = url;
+
+	// 检查是否在iframe中
+	if (window.parent && window.parent !== window) {
+		console.log('检测到在iframe中');
+		// 在iframe中，调用父窗口的navPage函数来更新导航
+		var fullUrl = url.replace('../', './pages/');
+		console.log('转换后的URL:', fullUrl);
+		localStorage.setItem('iframeUrl', fullUrl);
+
+		// 调用父窗口的navPage函数，这样可以同步更新导航标签
+		if (window.parent.navPage && typeof window.parent.navPage === 'function') {
+			console.log('调用父窗口的navPage函数');
+			window.parent.navPage(fullUrl);
+		} else {
+			console.log('父窗口没有navPage函数，直接跳转');
+			// 如果父窗口没有navPage函数，则直接设置iframe的src
+			window.location.href = url;
+		}
+	} else {
+		console.log('不在iframe中，正常跳转');
+		// 不在iframe中，正常跳转
+		localStorage.setItem('iframeUrl', url.replace('../', './pages/'));
+		window.location.href = url;
+	}
 }
 
 /**

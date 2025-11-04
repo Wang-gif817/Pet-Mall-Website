@@ -1,12 +1,18 @@
-/*定义全局css*/
+/*定义全局css - 现代化宠物商城主题*/
 body {
-
-	/* 紫色 */
-    /* 1 全局公共主颜色 */
-    --publicMainColor: #E57498;
-    /* 1 全局公共副颜色 */
-    --publicSubColor:  #B24592;
-
+    /* 宠物商城温暖主题配色 */
+    /* 主色：温暖橙色 - 活泼、友好的宠物主题 */
+    --publicMainColor: #FF9068;
+    /* 副色：柔和蓝色 - 可靠、专业 */
+    --publicSubColor: #4A90E2;
+    /* 背景色：温馨米色 */
+    --backgroundColor: #FFF8F0;
+    /* 强调色：活力黄色 */
+    --accentColor: #FFD93D;
+    /* 文字主色 */
+    --textPrimary: #333333;
+    /* 文字副色 */
+    --textSecondary: #666666;
 }
 
 /*开始==================================导航栏样式1=========================================开始*/
@@ -30,11 +36,11 @@ body {
 	align-items: center;
 	padding: 0 20px;
 	font-size: 16px;
-	color: #2a8a15;
+	color: #ffffff;
 	box-sizing: border-box;
 	height: 80px;
-	background-color: var(--publicMainColor);
-	box-shadow: 0px 0px 0px #f9906f;
+	background: linear-gradient(135deg, var(--publicMainColor) 0%, #FF7B54 100%);
+	box-shadow: 0 2px 12px rgba(255, 144, 104, 0.3);
 	justify-content: space-between;
 	position: relative;
 }
@@ -83,9 +89,10 @@ body {
 	align-items: center;
 	box-sizing: border-box;
 	height: 70px;
-	background-color: rgba(160, 67, 26, 0);
-	box-shadow: 0 1px 6px rgba(0,0,0,0);
+	background-color: #ffffff;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 	justify-content: center;
+	transition: all 0.3s ease;
 }
 /*标题字体颜色*/
 #header .navs .title {
@@ -106,39 +113,44 @@ body {
 	display: inline-block;
 	width: auto;
 	line-height: 70px;
-	padding: 0 10px;
-	margin: 0 0px;
+	padding: 0 20px;
+	margin: 0 5px;
 	color: #333;
-	font-size: 20px;
-	border-radius: 0px;
+	font-size: 16px;
+	border-radius: 8px;
 	border-width: 0px;
 	border-style: solid;
-	border-color: rgba(0, 0, 0, 0);
-	background-color: rgba(194, 204, 208, 0);
-	box-shadow: 0 0 0px ;
+	border-color: transparent;
+	background-color: transparent;
+	box-shadow: none;
 	text-align: center;
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	cursor: pointer;
+	font-weight: 500;
 }
 /*点击后导航栏所选模块背景和边框颜色*/
 #header .navs li.current {
-	color: rgba(255, 255, 255, 1);
-	font-size: 20px;
-	border-radius: 0px;
-	border-width: 1px;
-	border-style: solid;
-	border-color: var(--publicMainColor);
-	background-color: var(--publicMainColor);
-	box-shadow: 0px 0px 0px var(--publicSubColor);
-}
-/*未知作用*/
-#header .navs li:hover {
-	color: rgba(255, 255, 255, 1);
-	font-size: 20px;
-	border-radius: 0px;
+	color: #ffffff;
+	font-size: 16px;
+	border-radius: 8px;
 	border-width: 0px;
 	border-style: solid;
 	border-color: var(--publicMainColor);
-	background-color: var(--publicMainColor);
-	box-shadow: 0 0 0px ;
+	background: linear-gradient(135deg, var(--publicMainColor) 0%, #FF7B54 100%);
+	box-shadow: 0 4px 12px rgba(255, 144, 104, 0.4);
+	transform: translateY(-2px);
+}
+/*悬停效果*/
+#header .navs li:hover {
+	color: #ffffff;
+	font-size: 16px;
+	border-radius: 8px;
+	border-width: 0px;
+	border-style: solid;
+	border-color: transparent;
+	background: linear-gradient(135deg, var(--publicMainColor) 0%, #FF7B54 100%);
+	box-shadow: 0 4px 12px rgba(255, 144, 104, 0.3);
+	transform: translateY(-2px);
 }
 #header .navs li a{
 	color: inherit;
@@ -175,29 +187,12 @@ body {
 	position:relative;
 	overflow: hidden;
 }
-.list-img .textbox {
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-	-webkit-transform: scale(0);
-	transform: scale(0);
-	background-color:rgba(239, 209, 47, 0.65);
-	border-radius: 50%;
-	-webkit-border-radius: 50%;
-	-moz-border-radius: 50%;
-	-o-border-radius: 50%;
-	-ms-border-radius: 50%;
+/* 移除黄色悬停效果，保留图片缩放效果 */
+.list-img img {
+	transition: transform 0.6s ease;
 }
-.textbox {
-	-webkit-transition: all 0.5s ease;
-	transition: all 0.5s ease;
-	text-align:center;
-}
-.list-img:hover .textbox {
-	-webkit-transform: scale(1.5);
-	transform: scale(1.5);
+.list-img:hover img {
+	transform: scale(1.1);
 }
 	/*list页面数据样式 普通数据样式 结束*/
 /*list页面数据样式 结束*/
@@ -207,6 +202,27 @@ body {
 #test1 .layui-carousel-ind li.layui-this {
 	background-color: var(--publicMainColor, #808080);
 	box-shadow: 0 0 6px var(--publicMainColor, #808080);
+}
+
+/* 轮播图现代化样式 */
+.banner {
+	position: relative;
+	overflow: hidden;
+	border-radius: 12px;
+	margin: 20px auto;
+	max-width: 1400px;
+	box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.banner::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 100px;
+	background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
+	pointer-events: none;
 }
 /* 个人中心轮播图 */
 #swiper .layui-carousel-ind li.layui-this {

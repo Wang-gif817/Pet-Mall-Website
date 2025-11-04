@@ -22,9 +22,9 @@
 <!-- start 顶部导航栏1 -->
 		<div id="header">
             <div v-if='true' class="nav-top">
-                <img v-if='false' class="nav-top-img" src='http://codegen.caihongy.cn/20210116/19006e072b0f4e5eb28ec9d519c5c841.png'>
+                <img v-if='false' class="nav-top-img" src=''>
                 <div v-if="true" class="nav-top-title">{{projectName}}</div>
-                <div class="nav-top-tel">欢迎来到我的网站</div>
+                <div class="nav-top-tel">欢迎来到宠物商城，为您的爱宠提供优质商品</div>
             </div>
             <div class="navs">
                 <!-- <div class="logo" style="font-size: 20px;top: 32px;color: #fff;font-weight: bold;margin-left: -200px;width: 240px;" v-text="projectName"></div> -->
@@ -116,21 +116,111 @@
     function navPage(url) {
         localStorage.setItem('iframeUrl', url);
         document.getElementById('iframe').src = url;
+        // 同步更新导航标签高亮
+        updateActiveTab(url);
+    }
+
+    // 根据URL更新导航标签高亮状态
+    function updateActiveTab(url) {
+        // 移除所有导航项的current类
+        let navItems = document.querySelectorAll('#header .navs li');
+        navItems.forEach(item => item.classList.remove('current'));
+
+        console.log('更新导航高亮, URL:', url); // 调试日志
+
+        // 根据URL匹配对应的导航项并添加current类
+        if (url.includes('/home/home.html')) {
+            // 首页
+            console.log('匹配到首页');
+            navItems[0].classList.add('current');
+        } else if (url.includes('/baike/')) {
+            // 百科相关页面（列表、详情等）
+            console.log('匹配到百科页面');
+            // indexNav中第一个是百科信息，所以是navItems[1]
+            if (navItems[1]) {
+                navItems[1].classList.add('current');
+            }
+        } else if (url.includes('/forum/')) {
+            // 论坛相关页面
+            console.log('匹配到论坛页面');
+            // indexNav中第二个是论坛，所以是navItems[2]
+            if (navItems[2]) {
+                navItems[2].classList.add('current');
+            }
+        } else if (url.includes('/liuyan/')) {
+            // 留言版相关页面
+            console.log('匹配到留言版页面');
+            // indexNav中第三个是留言版，所以是navItems[3]
+            if (navItems[3]) {
+                navItems[3].classList.add('current');
+            }
+        } else if (url.includes('/shangpin/')) {
+            // 商品相关页面（列表、详情等）
+            console.log('匹配到商品页面');
+            // indexNav中第四个是商品，所以是navItems[4]
+            if (navItems[4]) {
+                navItems[4].classList.add('current');
+            }
+        } else if (url.includes('/center.html')) {
+            // 个人中心
+            console.log('匹配到个人中心');
+            // 个人中心是第5个导航项（0-based index = 5）
+            if (navItems[5]) {
+                navItems[5].classList.add('current');
+            }
+        } else if (url.includes('/cart/')) {
+            // 购物车
+            console.log('匹配到购物车');
+            // 购物车是最后一个导航项
+            if (navItems[navItems.length - 1]) {
+                navItems[navItems.length - 1].classList.add('current');
+            }
+        }
     }
 
     // 跳转到个人中心也
     function centerPage() {
         var userTable = localStorage.getItem('userTable');
         if (userTable) {
-            localStorage.setItem('iframeUrl', './pages/' + userTable + '/center.html');
-            document.getElementById('iframe').src = './pages/' + userTable + '/center.html';
+            var centerUrl = './pages/' + userTable + '/center.html';
+            localStorage.setItem('iframeUrl', centerUrl);
+            document.getElementById('iframe').src = centerUrl;
+            // 同步更新导航标签高亮
+            updateActiveTab(centerUrl);
         } else {
             window.location.href = './pages/login/login.html'
         }
     }
 
-    var iframeUrl = localStorage.getItem('iframeUrl');
-    document.getElementById('iframe').src = iframeUrl  || './pages/home/home.html';
+    var iframeUrl = localStorage.getItem('iframeUrl') || './pages/home/home.html';
+    document.getElementById('iframe').src = iframeUrl;
+    // 初始化时也更新导航标签高亮
+    updateActiveTab(iframeUrl);
+
+    // 监听iframe的load事件，当iframe内容变化时同步更新导航栏
+    document.getElementById('iframe').addEventListener('load', function() {
+        try {
+            // 尝试获取iframe的当前URL
+            var iframe = document.getElementById('iframe');
+            var iframeLocation = iframe.contentWindow.location.href;
+
+            console.log('iframe加载完成，当前URL:', iframeLocation);
+
+            // 从完整URL中提取相对路径
+            var baseUrl = window.location.origin + window.location.pathname.replace('index.html', '');
+            var relativePath = iframeLocation.replace(baseUrl, './');
+
+            console.log('提取的相对路径:', relativePath);
+
+            // 更新localStorage
+            localStorage.setItem('iframeUrl', relativePath);
+
+            // 更新导航栏高亮
+            updateActiveTab(relativePath);
+        } catch(e) {
+            console.log('无法访问iframe URL（可能是跨域限制）:', e);
+        }
+    });
 
     // var i = 0;
     setInterval(function(){

@@ -13,7 +13,7 @@
             </div>
         </el-menu>
     </el-header> -->
-    <div class="navbar" :style="{backgroundColor:heads.headBgColor,height:heads.headHeight,boxShadow:heads.headBoxShadow,lineHeight:heads.headHeight}">
+    <div class="navbar" :style="{background:heads.headBgColor,height:heads.headHeight,boxShadow:heads.headBoxShadow,lineHeight:heads.headHeight}">
         <div class="title-menu" :style="{justifyContent:heads.headTitleStyle=='1'?'flex-start':'center'}">
             <el-image v-if="heads.headTitleImg" class="title-img" :style="{width:heads.headTitleImgWidth,height:heads.headTitleImgHeight,boxShadow:heads.headTitleImgBoxShadow,borderRadius:heads.headTitleImgBorderRadius}" :src="heads.headTitleImgUrl" fit="cover"></el-image>
             <div class="title-name" :style="{color:heads.headFontColor,fontSize:heads.headFontSize}">{{this.$project.projectName}}</div>
@@ -33,7 +33,7 @@
                 dialogVisible: false,
                 ruleForm: {},
                 user: {},
-                heads: {"headLogoutFontHoverColor":"#fff","headFontSize":"25px","headUserInfoFontColor":"rgba(231, 231, 231, 1)","headBoxShadow":"0px 0px 0px 10px #FFFF66","headTitleImgHeight":"44px","headLogoutFontHoverBgColor":"rgba(170, 153, 153, 0.41)","headFontColor":"rgba(255, 255, 255, 1)","headTitleImg":false,"headHeight":"70px","headTitleImgBorderRadius":"22px","headTitleImgUrl":"http://codegen.caihongy.cn/20201021/cc7d45d9c8164b58b18351764eba9be1.jpg","headBgColor":"#19A97B","headTitleImgBoxShadow":"0 1px 6px #444","headLogoutFontColor":"rgba(231, 231, 231, 1)","headUserInfoFontSize":"16px","headTitleImgWidth":"44px","headTitleStyle":"2","headLogoutFontSize":"16px"},
+                heads: {"headLogoutFontHoverColor":"#fff","headFontSize":"22px","headUserInfoFontColor":"rgba(255, 255, 255, 0.9)","headBoxShadow":"0 2px 8px rgba(0,0,0,0.1)","headTitleImgHeight":"44px","headLogoutFontHoverBgColor":"rgba(255, 144, 104, 0.2)","headFontColor":"rgba(255, 255, 255, 1)","headTitleImg":false,"headHeight":"70px","headTitleImgBorderRadius":"22px","headTitleImgUrl":"","headBgColor":"linear-gradient(135deg, #FF9068 0%, #FF7B54 100%)","headTitleImgBoxShadow":"0 2px 8px rgba(0,0,0,0.15)","headLogoutFontColor":"rgba(255, 255, 255, 0.9)","headUserInfoFontSize":"14px","headTitleImgWidth":"44px","headTitleStyle":"2","headLogoutFontSize":"14px"},
             };
         },
         created() {
@@ -118,8 +118,10 @@
     .logout {
         font-size: 16px;
         color: red;
-        padding: 0 12px;
+        padding: 8px 16px;
         cursor: pointer;
+        border-radius: 8px;
+        transition: all 0.3s ease;
     }
 
     }

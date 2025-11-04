@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>宠物商城 - 为您的爱宠提供优质商品</title>
+    <meta name="description" content="宠物商城网站 - 专业的宠物用品购物平台"/>
+    <meta name="keywords" content="宠物商城,宠物用品,宠物食品,宠物玩具"/>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <link rel="stylesheet" href="../../xznstatic/css/common.css"/>
+    <link rel="stylesheet" href="../../xznstatic/css/bootstrap.min.css" />
+    <link href="https://cdn.bootcdn.net/ajax/libs/Swiper/5.4.5/css/swiper.min.css" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #FF9068;
+            --primary-dark: #FF7B54;
+            --secondary-color: #4A90E2;
+            --accent-color: #FFD93D;
+            --text-primary: #2C3E50;
+            --text-secondary: #7F8C8D;
+            --bg-light: #FFF8F0;
+            --white: #FFFFFF;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.16);
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            color: var(--text-primary);
+            background: var(--bg-light);
+            overflow-x: hidden;
+        }
+
+        /* ==================== 现代化导航栏 ==================== */
+        .modern-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modern-navbar.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: var(--shadow-md);
+            padding: 0.5rem 0;
+        }
+
+        .navbar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .navbar-menu a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+            transition: width 0.3s ease;
+        }
+
+        .navbar-menu a:hover {
+            color: var(--primary-color);
+        }
+
+        .navbar-menu a:hover::after {
+            width: 100%;
+        }
+
+        .navbar-cta {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-primary-modern {
+            padding: 0.8rem 1.8rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 144, 104, 0.3);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 144, 104, 0.4);
+        }
+
+        /* ==================== Hero Section全屏横幅 ==================== */
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            min-height: 700px;
+            margin-top: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-swiper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-swiper .layui-carousel {
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-swiper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.8);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 144, 104, 0.3), rgba(74, 144, 226, 0.3));
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            max-width: 900px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-hero {
+            padding: 1.2rem 3rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .btn-hero-primary {
+            background: white;
+            color: var(--primary-color);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .btn-hero-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+        }
+
+        .btn-hero-secondary {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-hero-secondary:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* ==================== 内容区域 ==================== */
+        .main-content {
+            margin-top: 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 区域容器 */
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--primary-dark));
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-top: 1.5rem;
+        }
+
+        /* ==================== 现代卡片Grid布局 ==================== */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .modern-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .modern-card:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modern-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 144, 104, 0.05), rgba(74, 144, 226, 0.05));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .modern-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-image-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 75%;
+            overflow: hidden;
+            background: #f5f5f5;
+        }
+
+        .card-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .modern-card:hover .card-image {
+            transform: scale(1.1);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(255, 144, 104, 0.3);
+            z-index: 1;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-description {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .card-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .card-action {
+            padding: 0.6rem 1.5rem;
+            background: var(--bg-light);
+            color: var(--primary-color);
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .card-action:hover {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* ==================== 百科信息区块 ==================== */
+        .info-section {
+            background: white;
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 3rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .info-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 16px;
+        }
+
+        .info-content h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .info-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-list li {
+            padding: 1rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .info-list li:hover {
+            padding-left: 1rem;
+            background: var(--bg-light);
+        }
+
+        .info-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* ==================== 响应式设计 ==================== */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .navbar-menu {
+                display: none;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 4rem 1rem;
+            }
+        }
+
+        /* ==================== 加载动画 ==================== */
+        .fade-in {
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .slide-up {
+            animation: slideUp 0.8s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!-- 现代化导航栏 -->
+    <nav class="modern-navbar" id="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                🐾 {{projectName}}
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="javascript:navPage('./pages/home/home-modern.html')">首页</a></li>
+                <li v-for="(item,index) in indexNav" :key="index">
+                    <a :href="'javascript:navPage(\''+item.url+'\')'" style="cursor: pointer;">{{item.name}}</a>
+                </li>
+                <li><a href="javascript:centerPage();">个人中心</a></li>
+            </ul>
+            <div class="navbar-cta">
+                <a href="javascript:navPage('./pages/cart/list.html')" class="btn-primary-modern">
+                    <span>🛒</span> 购物车
+                </a>
+                <a :href="adminurl" target="_blank" class="btn-primary-modern" style="background: linear-gradient(135deg, var(--secondary-color), #357ABD);">
+                    <span>⚙️</span> 管理
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero全屏Banner -->
+    <section class="hero-section">
+        <div class="hero-swiper">
+            <div class="layui-carousel" id="heroCarousel">
+                <div carousel-item>
+                    <div v-for="(item,index) in swiperList" :key="index">
+                        <img :src="item.img" alt="轮播图"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">为您的爱宠<br/>提供最优质的生活</h1>
+            <p class="hero-subtitle">精选全球优质宠物用品，让每一只宠物都能享受最好的呵护</p>
+            <div class="hero-buttons">
+                <a href="javascript:navPage('./pages/shangpin/list.html')" class="btn-hero btn-hero-primary">
+                    立即选购 →
+                </a>
+                <a href="javascript:navPage('./pages/baike/list.html')" class="btn-hero btn-hero-secondary">
+                    了解更多
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 主要内容区 -->
+    <div class="main-content">
+        <!-- 百科信息区 -->
+        <section class="section" v-if="baikeList.length">
+            <div class="section-header slide-up">
+                <h2 class="section-title">🎓 宠物百科</h2>
+                <p class="section-subtitle">科学养宠，从了解开始</p>
+            </div>
+
+            <div class="info-section fade-in">
+                <div class="info-grid">
+                    <img v-if="baikeList[0]" :src="baikeList[0].baikePhoto" class="info-image" alt="百科图片">
+                    <div class="info-content">
+                        <h3>最新百科动态</h3>
+                        <ul class="info-list">
+                            <li v-for="(item,index) in baikeList" v-if="index<5" :key="index"
+                                @click="jump('../baike/detail.html?id='+item.id)"
+                                style="cursor: pointer;">
+                                <span>{{ item.baikeName }}</span>
+                                <span style="color: var(--text-secondary); font-size: 0.9rem;">{{ item.insertTime }}</span>
+                            </li>
+                        </ul>
+                        <button @click="jump('../baike/list.html')" class="btn-primary-modern" style="margin-top: 2rem;">
+                            查看全部百科 →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 商品展示区 -->
+        <section class="section" style="background: white; margin: 0; max-width: 100%;">
+            <div style="max-width: 1400px; margin: 0 auto; padding: 0 2rem;">
+                <div class="section-header slide-up">
+                    <h2 class="section-title">🛍️ 精选商品</h2>
+                    <p class="section-subtitle">为您的爱宠挑选最优质的产品</p>
+                </div>
+
+                <div class="card-grid fade-in">
+                    <div v-for="(item,index) in shangpinList" :key="index" class="modern-card"
+                         @click="jumpCheck('../shangpin/detail.html?id='+item.id, item.aaaaaaaaaa, item.shangxiaTypes)">
+                        <div class="card-image-wrapper">
+                            <img class="card-image" :src="item.shangpinPhoto?item.shangpinPhoto.split(',')[0]:''" alt="商品图片"/>
+                            <div class="card-badge" v-if="item.shangxiaTypes == 1">热卖</div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">{{item.shangpinName}}</h3>
+                            <p class="card-description">{{item.shangpinContent || '优质商品，值得信赖'}}</p>
+                            <div class="card-footer">
+                                <div class="card-price">¥{{item.shangpinNewMoney}}</div>
+                                <button class="card-action">立即购买</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 4rem;">
+                    <button @click="jump('../shangpin/list.html')" class="btn-primary-modern"
+                            style="padding: 1rem 3rem; font-size: 1.1rem;">
+                        浏览更多商品 →
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script src="../../xznstatic/js/jquery-1.11.3.min.js"></script>
+<script src="../../layui/layui.js"></script>
+<script src="../../js/vue.js"></script>
+<script src="../../xznstatic/js/element.min.js"></script>
+<link rel="stylesheet" href="../../xznstatic/css/element.min.css">
+<script src="../../js/config.js"></script>
+<script src="../../modules/config.js"></script>
+<script src="../../js/utils.js"></script>
+
+<script type="text/javascript">
+    var vue = new Vue({
+        el: '#app',
+        data: {
+            swiperList: [],
+            baikeList: [],
+            shangpinList: [],
+            indexNav: indexNav,
+            adminurl: adminurl,
+            projectName: projectName,
+        },
+        mounted() {
+            this.initScrollEffects();
+        },
+        methods: {
+            jump(url) {
+                jump(url)
+            },
+            jumpCheck(url, check1, check2) {
+                if(check1 == "2" || check1 == 2){
+                    layui.layer.msg("已经被删除", { time: 2000, icon: 2 });
+                    return false;
+                }
+                if(check2 == "2" || check2 == 2){
+                    layui.layer.msg("已经下架", { time: 2000, icon: 2 });
+                    return false;
+                }
+                this.jump(url);
+            },
+            initScrollEffects() {
+                // 导航栏滚动效果
+                window.addEventListener('scroll', () => {
+                    const navbar = document.getElementById('navbar');
+                    if (window.scrollY > 50) {
+                        navbar.classList.add('scrolled');
+                    } else {
+                        navbar.classList.remove('scrolled');
+                    }
+                });
+
+                // 元素滚动显示动画
+                const observerOptions = {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -100px 0px'
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }
+                    });
+                }, observerOptions);
+
+                // 观察所有卡片
+                document.querySelectorAll('.modern-card, .slide-up, .fade-in').forEach(el => {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(20px)';
+                    el.style.transition = 'all 0.6s ease';
+                    observer.observe(el);
+                });
+            }
+        }
+    });
+
+    layui.use(['layer', 'carousel', 'http'], function () {
+        var layer = layui.layer;
+        var carousel = layui.carousel;
+        var http = layui.http;
+
+        // 获取轮播图数据
+        http.request('config/list', 'get', {
+            page: 1,
+            limit: 5
+        }, function (res) {
+            if (res.data.list.length > 0) {
+                let swiperList = [];
+                res.data.list.forEach(element => {
+                    if(element.value != null) {
+                        swiperList.push({ img: element.value });
+                    }
+                });
+                vue.swiperList = swiperList;
+
+                vue.$nextTick(() => {
+                    carousel.render({
+                        elem: '#heroCarousel',
+                        width: '100%',
+                        height: '100%',
+                        arrow: 'always',
+                        anim: 'fade',
+                        autoplay: true,
+                        interval: 5000,
+                        indicator: 'inside'
+                    });
+                });
+            }
+        });
+
+        // 获取百科信息
+        http.request('baike/list', 'get', {
+            page: 1,
+            limit: 8,
+        }, function (res) {
+            vue.baikeList = res.data.list;
+        });
+
+        // 获取商品列表
+        http.request('shangpin/list', 'get', {
+            page: 1,
+            limit: 8,
+            shangxiaTypes: 1,
+            shangpinDelete: 1,
+        }, function (res) {
+            vue.shangpinList = res.data.list;
+        });
+    });
+
+    // 页面跳转函数
+    function navPage(url) {
+        window.parent.navPage(url);
+    }
+
+    function centerPage() {
+        window.parent.centerPage();
+    }
+</script>
+</body>
+</html>
