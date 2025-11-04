@@ -1,0 +1,2 @@
+http://localhost:8080/chongwushangchengwangzhan/front/index.html
+http://localhost:8080/chongwushangchengwangzhan/admin/dist/index.html
